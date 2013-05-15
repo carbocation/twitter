@@ -12,7 +12,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/garyburd/go-oauth/oauth"
-	"github.com/gosexy/sugar"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
@@ -123,8 +122,8 @@ func (self *Client) Setup() error {
 
 	https://dev.twitter.com/docs/api/1.1/get/account/verify_credentials
 */
-func (self *Client) VerifyCredentials(params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) VerifyCredentials(params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	err = self.get("/account/verify_credentials", merge(url.Values{}, params), data)
 	return data, err
 }
@@ -134,8 +133,8 @@ func (self *Client) VerifyCredentials(params url.Values) (data *sugar.Map, err e
 
 	https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
 */
-func (self *Client) HomeTimeline(params url.Values) (data *sugar.List, err error) {
-	data = &sugar.List{}
+func (self *Client) HomeTimeline(params url.Values) (data *[]map[string]interface{}, err error) {
+	data = &[]map[string]interface{}{}
 	err = self.get("/statuses/home_timeline", merge(url.Values{}, params), data)
 	return data, err
 }
@@ -145,8 +144,8 @@ func (self *Client) HomeTimeline(params url.Values) (data *sugar.List, err error
 
 	https://dev.twitter.com/docs/api/1.1/get/statuses/mentions_timeline
 */
-func (self *Client) MentionsTimeline(params url.Values) (data *sugar.List, err error) {
-	data = &sugar.List{}
+func (self *Client) MentionsTimeline(params url.Values) (data *[]map[string]interface{}, err error) {
+	data = &[]map[string]interface{}{}
 	err = self.get("/statuses/mentions_timeline", merge(url.Values{}, params), data)
 	return data, err
 }
@@ -156,8 +155,8 @@ func (self *Client) MentionsTimeline(params url.Values) (data *sugar.List, err e
 
 	https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline
 */
-func (self *Client) UserTimeline(params url.Values) (data *sugar.List, err error) {
-	data = &sugar.List{}
+func (self *Client) UserTimeline(params url.Values) (data *[]map[string]interface{}, err error) {
+	data = &[]map[string]interface{}{}
 	err = self.get("/statuses/user_timeline", merge(url.Values{}, params), data)
 	return data, err
 }
@@ -167,8 +166,8 @@ func (self *Client) UserTimeline(params url.Values) (data *sugar.List, err error
 
 	https://dev.twitter.com/docs/api/1.1/get/statuses/retweets_of_me
 */
-func (self *Client) RetweetsOfMe(params url.Values) (data *sugar.List, err error) {
-	data = &sugar.List{}
+func (self *Client) RetweetsOfMe(params url.Values) (data *[]map[string]interface{}, err error) {
+	data = &[]map[string]interface{}{}
 	err = self.get("/statuses/retweets_of_me", merge(url.Values{}, params), data)
 	return data, err
 }
@@ -178,8 +177,8 @@ func (self *Client) RetweetsOfMe(params url.Values) (data *sugar.List, err error
 
 	https://dev.twitter.com/docs/api/1.1/get/statuses/retweets/%3Aid
 */
-func (self *Client) Retweets(id int64, params url.Values) (data *sugar.List, err error) {
-	data = &sugar.List{}
+func (self *Client) Retweets(id int64, params url.Values) (data *[]map[string]interface{}, err error) {
+	data = &[]map[string]interface{}{}
 	err = self.get(fmt.Sprintf("/statuses/retweets/%d", id), merge(url.Values{}, params), data)
 	return data, err
 }
@@ -189,8 +188,8 @@ func (self *Client) Retweets(id int64, params url.Values) (data *sugar.List, err
 
 	https://dev.twitter.com/docs/api/1.1/get/statuses/show/%3Aid
 */
-func (self *Client) Show(id int64, params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) Show(id int64, params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	err = self.get(fmt.Sprintf("/statuses/show/%d", id), merge(url.Values{}, params), data)
 	return data, err
 }
@@ -200,8 +199,8 @@ func (self *Client) Show(id int64, params url.Values) (data *sugar.Map, err erro
 
 	https://dev.twitter.com/docs/api/1.1/post/statuses/destroy/%3Aid
 */
-func (self *Client) Destroy(id int64, params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) Destroy(id int64, params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	err = self.post(fmt.Sprintf("/statuses/destroy/%d", id), nil, merge(url.Values{}, params), data)
 	return data, err
 }
@@ -211,8 +210,8 @@ func (self *Client) Destroy(id int64, params url.Values) (data *sugar.Map, err e
 
 	https://dev.twitter.com/docs/api/1.1/post/statuses/retweet/%3Aid
 */
-func (self *Client) Retweet(id int64, params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) Retweet(id int64, params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	err = self.post(fmt.Sprintf("/statuses/retweet/%d", id), nil, merge(url.Values{}, params), data)
 	return data, err
 }
@@ -222,11 +221,11 @@ func (self *Client) Retweet(id int64, params url.Values) (data *sugar.Map, err e
 
 	https://dev.twitter.com/docs/api/1.1/post/statuses/update_with_media
 */
-func (self *Client) UpdateWithMedia(status string, params url.Values, files []string) (data *sugar.Map, err error) {
+func (self *Client) UpdateWithMedia(status string, params url.Values, files []string) (data *map[string]interface{}, err error) {
 
 	endpoint := "/statuses/update_with_media"
 
-	data = &sugar.Map{}
+	data = &map[string]interface{}{}
 
 	buf := bytes.NewBuffer(nil)
 	body := multipart.NewWriter(buf)
@@ -278,8 +277,8 @@ func (self *Client) UpdateWithMedia(status string, params url.Values, files []st
 
 	https://dev.twitter.com/docs/api/1.1/post/statuses/update
 */
-func (self *Client) Update(status string, params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) Update(status string, params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 
 	local := url.Values{
 		"status": {status},
@@ -295,8 +294,8 @@ func (self *Client) Update(status string, params url.Values) (data *sugar.Map, e
 
 	https://dev.twitter.com/docs/api/1.1/get/statuses/oembed
 */
-func (self *Client) Oembed(params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) Oembed(params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	err = self.get("/statuses/oembed", params, data)
 	return data, err
 }
@@ -306,8 +305,8 @@ func (self *Client) Oembed(params url.Values) (data *sugar.Map, err error) {
 
 	https://dev.twitter.com/docs/api/1.1/get/search/tweets
 */
-func (self *Client) Search(params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) Search(params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	err = self.get("/search/tweets", params, data)
 	return data, err
 }
@@ -317,8 +316,8 @@ func (self *Client) Search(params url.Values) (data *sugar.Map, err error) {
 
 	https://dev.twitter.com/docs/api/1.1/get/friends/ids
 */
-func (self *Client) Friends(params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) Friends(params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	err = self.get("/friends/ids", params, data)
 	return data, err
 }
@@ -328,8 +327,8 @@ func (self *Client) Friends(params url.Values) (data *sugar.Map, err error) {
 
 	https://dev.twitter.com/docs/api/1.1/get/followers/ids
 */
-func (self *Client) Followers(params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) Followers(params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	err = self.get("/followers/ids", params, data)
 	return data, err
 }
@@ -339,8 +338,8 @@ func (self *Client) Followers(params url.Values) (data *sugar.Map, err error) {
 
 	https://dev.twitter.com/docs/api/1.1/get/users/lookup
 */
-func (self *Client) LookupUser(params url.Values) (data *sugar.List, err error) {
-	data = &sugar.List{}
+func (self *Client) LookupUser(params url.Values) (data *[]map[string]interface{}, err error) {
+	data = &[]map[string]interface{}{}
 	err = self.get("/users/lookup", params, data)
 	return data, err
 }
@@ -350,8 +349,8 @@ func (self *Client) LookupUser(params url.Values) (data *sugar.List, err error) 
 
 	https://dev.twitter.com/docs/api/1.1/get/users/show
 */
-func (self *Client) ShowUser(params url.Values) (data *sugar.Map, err error) {
-	data = &sugar.Map{}
+func (self *Client) ShowUser(params url.Values) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	err = self.get("/users/show", params, data)
 	return data, err
 }

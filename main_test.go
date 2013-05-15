@@ -10,9 +10,9 @@ package twitter
 import (
 	"fmt"
 	"github.com/garyburd/go-oauth/oauth"
-	"github.com/gosexy/sugar"
-	"github.com/gosexy/to"
-	"github.com/gosexy/yaml"
+	"menteslibres.net/gosexy/dig"
+	"menteslibres.net/gosexy/to"
+	"menteslibres.net/gosexy/yaml"
 	"testing"
 	"time"
 )
@@ -36,13 +36,13 @@ func TestApi(t *testing.T) {
 	var err error
 
 	client := New(&oauth.Credentials{
-		to.String(conf.Get("twitter/app/key")),
-		to.String(conf.Get("twitter/app/secret")),
+		to.String(conf.Get("twitter", "app", "key")),
+		to.String(conf.Get("twitter", "app", "secret")),
 	})
 
 	client.SetAuth(&oauth.Credentials{
-		to.String(conf.Get("twitter/user/token")),
-		to.String(conf.Get("twitter/user/secret")),
+		to.String(conf.Get("twitter", "user", "token")),
+		to.String(conf.Get("twitter", "user", "secret")),
 	})
 
 	_, err = client.VerifyCredentials(nil)
@@ -81,14 +81,14 @@ func TestApi(t *testing.T) {
 		t.Errorf("Test failed: %s\n", err.Error())
 	}
 
-	var status *sugar.Map
+	var status *map[string]interface{}
 	status, err = client.Update(fmt.Sprintf("Test message @ %s", time.Now()), nil)
 
 	if err != nil {
 		t.Errorf("Test failed: %s\n", err.Error())
 	}
 
-	tweetId := to.Int64(status.Get("id_str"))
+	tweetId := dig.Int64(status, "id_str")
 
 	_, err = client.Destroy(tweetId, nil)
 
@@ -96,7 +96,7 @@ func TestApi(t *testing.T) {
 		t.Errorf("Test failed: %s\n", err.Error())
 	}
 
-	tweetId = to.Int64(status.Get("id_str"))
+	tweetId = dig.Int64(status, "id_str")
 
 	files := []string{
 		"_resources/test.jpg",

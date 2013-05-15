@@ -9,23 +9,21 @@ Register your APP at https://dev.twitter.com/apps to get your Key and Secret.
 Leave "Callback URL" blank, you don't need it for the command line tests.
 
 ```sh
-# Creating a dev directory
-% mkdir -p $GOPATH/src/github.com/astrata
-% cd $GOPATH/src/github.com/astrata
-% git clone git://github.com/astrata/twitter.git twitter
-% cd twitter
+# Getting the source
+go get github.com/xiam/twitter
 
-# This may require you some additional work.
-% go build
+# Installing the twitter command
+go install github.com/xiam/twitter/cli/twitter
 
-# Install the twitter command
-% go install github.com/astrata/twitter/cli/twitter
+# Go to the pkg directory.
+cd $GOPATH/src/github.com/xiam/twitter
 
-# This will ask you for your PIN and will give you your user credentials.
-% twitter -key AAAA -secret BBBB
+# Use the twitter command to retrive an API token.
+# This will ask you for a PIN and will give you your user credentials.
+twitter -key $APP_KEY -secret $APP_SECRET
 
 # Create a settings.yaml file with your app keys and user credentials.
-% cat settings.yaml
+cat settings.yaml
 twitter:
   app:
     key: ZerGYGhZytwFrsaR4xAse
@@ -35,7 +33,7 @@ twitter:
     secret: fmt5pMcEbXer4DmmRFls7KesjXcQ4utgqrTf0KcR8
 
 # Run the tests.
-% go test
+go test
 
 # Hack what you need and send pull requests :-).
 vim main.go
@@ -43,7 +41,7 @@ vim main.go
 
 This is not production ready.
 
-Read the docs online at http://go.pkgdoc.org/github.com/astrata/twitter
+See the docs at http://godoc.org/github.com/xiam/twitter
 
 [1]: http://golang.org
 [2]: https://dev.twitter.com/docs/api/1.1

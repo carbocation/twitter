@@ -10,8 +10,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/astrata/twitter"
 	"github.com/garyburd/go-oauth/oauth"
+	"github.com/xiam/twitter"
 	"log"
 )
 
