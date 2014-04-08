@@ -18,7 +18,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path"
 	"strings"
 )
 
@@ -217,11 +216,11 @@ func (self *Client) Retweet(id int64, params url.Values) (data *map[string]inter
 }
 
 /*
-	Updates the authenticating user's current status and attaches media for upload. In other words, it creates a Tweet with a picture attached.
+	Updates the authenticating user's current status and attaches media for upload. In other words, it creates a Tweet with pictures attached.
 
 	https://dev.twitter.com/docs/api/1.1/post/statuses/update_with_media
 */
-func (self *Client) UpdateWithMedia(status string, params url.Values, files []string) (data *map[string]interface{}, err error) {
+func (self *Client) UpdateWithMedia(status string, params url.Values, media [][]byte) (data *map[string]interface{}, err error) {
 
 	endpoint := "/statuses/update_with_media"
 
@@ -230,23 +229,17 @@ func (self *Client) UpdateWithMedia(status string, params url.Values, files []st
 	buf := bytes.NewBuffer(nil)
 	body := multipart.NewWriter(buf)
 
-	for _, file := range files {
+	for _, mediaBytes := range media {
 
-		writer, err := body.CreateFormFile("media[]", path.Base(file))
-
-		if err != nil {
-			return nil, err
-		}
-
-		reader, err := os.Open(file)
+		writer, err := body.CreateFormField("media[]")
 
 		if err != nil {
 			return nil, err
 		}
+
+		reader := bytes.NewReader(mediaBytes)
 
 		io.Copy(writer, reader)
-
-		reader.Close()
 	}
 
 	params = merge(url.Values{"status": {status}}, params)
